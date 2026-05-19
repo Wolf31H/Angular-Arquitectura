@@ -1,0 +1,26 @@
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 7%);
+}
+
+.title {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+strong {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.45rem;
+  color: #111827;
+}
+
+small {
+  display: block;
+  margin-top: 0.3rem;
+  color: #9ca3af;
+}

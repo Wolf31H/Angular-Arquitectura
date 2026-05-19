@@ -1,0 +1,45 @@
+<app-page-header
+  title="Facturacion electronica"
+  subtitle="Gestion de documentos tributarios para servicios y venta de productos"
+  badge="DIAN"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Facturas emitidas"
+    [value]="facturas().length.toString()"
+    helpText="Operacion del dia"
+  />
+  <app-kpi-card
+    title="Rechazadas"
+    [value]="rechazadas().toString()"
+    helpText="Pendientes por corregir"
+  />
+</section>
+
+<section class="panel table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Numero</th>
+        <th>Paciente</th>
+        <th>Fecha</th>
+        <th>Valor</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (factura of facturas(); track factura.numero) {
+        <tr>
+          <td>{{ factura.numero }}</td>
+          <td>{{ factura.paciente }}</td>
+          <td>{{ factura.fecha | date: 'mediumDate' }}</td>
+          <td>{{ factura.valorTotal | currency: 'COP':'symbol-narrow':'1.0-0' }}</td>
+          <td>
+            <span class="pill" [ngClass]="factura.estado">{{ factura.estado }}</span>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

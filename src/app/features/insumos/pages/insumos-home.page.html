@@ -1,0 +1,38 @@
+<app-page-header
+  title="Insumos"
+  subtitle="Catalogo de consumibles por procedimiento podologico"
+  badge="Costos"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Referencias"
+    [value]="insumos().length.toString()"
+    helpText="Insumos estandarizados"
+  />
+</section>
+
+<section class="panel table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Descripcion</th>
+        <th>Unidad</th>
+        <th>Costo promedio</th>
+        <th>Consumo mensual</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (insumo of insumos(); track insumo.codigo) {
+        <tr>
+          <td>{{ insumo.codigo }}</td>
+          <td>{{ insumo.descripcion }}</td>
+          <td>{{ insumo.unidadMedida }}</td>
+          <td>{{ insumo.costoPromedio | currency: 'COP':'symbol-narrow':'1.0-0' }}</td>
+          <td>{{ insumo.consumoMensual }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

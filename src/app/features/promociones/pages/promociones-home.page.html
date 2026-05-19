@@ -1,0 +1,38 @@
+<app-page-header
+  title="Promociones"
+  subtitle="Configuracion de paquetes de servicios y campanas comerciales"
+  badge="Marketing"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Promociones activas"
+    [value]="activas().toString()"
+    helpText="Con aplicacion vigente"
+  />
+</section>
+
+<section class="panel table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Campana</th>
+        <th>Descuento</th>
+        <th>Vigencia</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (promocion of promociones(); track promocion.codigo) {
+        <tr>
+          <td>{{ promocion.codigo }}</td>
+          <td>{{ promocion.nombre }}</td>
+          <td>{{ promocion.descuentoPorcentaje }}%</td>
+          <td>{{ promocion.vigenteHasta | date: 'mediumDate' }}</td>
+          <td><span class="pill" [ngClass]="promocion.estado">{{ promocion.estado }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

@@ -1,0 +1,20 @@
+<app-page-header
+  title="Reportes"
+  subtitle="Analitica para decisiones clinicas, operativas y financieras"
+  badge="BI"
+/>
+
+<section class="kpi-grid">
+  @for (item of indicadores; track item.title) {
+    <app-kpi-card [title]="item.title" [value]="item.value" [helpText]="item.helpText" />
+  }
+</section>
+
+<section class="panel">
+  <h3>Proximos pasos de analitica</h3>
+  <ul>
+    @for (sugerencia of sugerencias; track sugerencia) {
+      <li>{{ sugerencia }}</li>
+    }
+  </ul>
+</section>

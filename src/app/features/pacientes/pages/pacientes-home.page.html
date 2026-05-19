@@ -1,0 +1,48 @@
+<app-page-header
+  title="Pacientes"
+  subtitle="Gestion de informacion demografica, riesgo y seguimiento clinico"
+  badge="CRM clinico"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Pacientes activos"
+    [value]="activos().toString()"
+    helpText="Con atencion en los ultimos 60 dias"
+  />
+  <app-kpi-card
+    title="Seguimiento"
+    [value]="enSeguimiento().toString()"
+    helpText="Requieren control programado"
+  />
+</section>
+
+<section class="panel table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Paciente</th>
+        <th>Telefono</th>
+        <th>Ultima visita</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (paciente of pacientes(); track paciente.id) {
+        <tr>
+          <td>{{ paciente.id }}</td>
+          <td>
+            <strong>{{ paciente.nombreCompleto }}</strong>
+            <small>{{ paciente.documento }}</small>
+          </td>
+          <td>{{ paciente.telefono }}</td>
+          <td>{{ paciente.ultimaVisita | date: 'mediumDate' }}</td>
+          <td>
+            <span class="pill" [ngClass]="paciente.estado">{{ paciente.estado }}</span>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

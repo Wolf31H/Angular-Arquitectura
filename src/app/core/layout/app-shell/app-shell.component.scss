@@ -1,0 +1,78 @@
+.shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #1e293b;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.brand p {
+  margin: 0.35rem 0 1.5rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.nav-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid transparent;
+  border-radius: 0.65rem;
+  padding: 0.6rem;
+  margin-bottom: 0.4rem;
+  transition: background 0.2s ease;
+}
+
+.nav-item small {
+  display: block;
+  color: #94a3b8;
+  line-height: 1.2;
+}
+
+.nav-item:hover {
+  background: #1e293b;
+}
+
+.nav-item.active {
+  background: #1d4ed8;
+  border-color: #3b82f6;
+}
+
+.icon {
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}

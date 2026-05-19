@@ -1,0 +1,49 @@
+<app-page-header
+  title="Historias clinicas"
+  subtitle="Registro de evolucion, diagnosticos y trazabilidad de tratamiento"
+  badge="Cumplimiento"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Casos de alto riesgo"
+    [value]="altoRiesgo().toString()"
+    helpText="Pacientes con pie diabetico avanzado"
+  />
+  <app-kpi-card
+    title="Historias abiertas"
+    [value]="historias().length.toString()"
+    helpText="Registros en curso este mes"
+  />
+</section>
+
+<section class="panel table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Historia</th>
+        <th>Paciente</th>
+        <th>Diagnostico</th>
+        <th>Riesgo</th>
+        <th>Ultimo control</th>
+        <th>Profesional</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (historia of historias(); track historia.id) {
+        <tr>
+          <td>{{ historia.id }}</td>
+          <td>{{ historia.pacienteId }}</td>
+          <td>{{ historia.diagnosticoPrincipal }}</td>
+          <td>
+            <span class="pill" [ngClass]="historia.riesgoPieDiabetico">
+              {{ historia.riesgoPieDiabetico }}
+            </span>
+          </td>
+          <td>{{ historia.ultimoControl | date: 'mediumDate' }}</td>
+          <td>{{ historia.profesional }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
