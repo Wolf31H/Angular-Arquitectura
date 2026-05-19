@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "Podiatry Clinic",
+    "welcome": "Welcome to the integrated platform"
+  },
+  "pacientes": {
+    "title": "Patients",
+    "loading": "Loading patients..."
+  }
+}

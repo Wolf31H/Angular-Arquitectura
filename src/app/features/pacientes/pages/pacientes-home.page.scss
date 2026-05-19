@@ -1,0 +1,60 @@
+.kpi-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 1rem;
+}
+
+.state-message {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.state-message.error {
+  color: #991b1b;
+  background: #fef2f2;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  padding: 0.7rem;
+  vertical-align: top;
+}
+
+td small {
+  display: block;
+  color: #6b7280;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.pill.activo {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.pill.seguimiento {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.pill.inactivo {
+  background: #f3f4f6;
+  color: #374151;
+}

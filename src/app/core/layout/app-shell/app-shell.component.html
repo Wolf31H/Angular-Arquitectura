@@ -1,0 +1,25 @@
+<mat-sidenav-container class="shell-container">
+  <mat-sidenav mode="side" opened class="shell-sidenav">
+    <mat-toolbar color="primary" class="brand-toolbar">Clinica Podologica</mat-toolbar>
+    <p class="brand-subtitle">Centro de estetica y salud del pie</p>
+
+    <mat-nav-list>
+      <a
+        mat-list-item
+        *ngFor="let item of navigationItems"
+        [routerLink]="item.route"
+        routerLinkActive="active-link"
+      >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+        <span matListItemLine>{{ item.description }}</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <main class="shell-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

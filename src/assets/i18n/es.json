@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "Clinica Podologica",
+    "welcome": "Bienvenido al sistema integral"
+  },
+  "pacientes": {
+    "title": "Pacientes",
+    "loading": "Cargando pacientes..."
+  }
+}

@@ -1,0 +1,51 @@
+<app-page-header
+  title="Agenda de citas"
+  subtitle="Programacion de atenciones, confirmaciones y control de ausentismo"
+  badge="Operacion diaria"
+/>
+
+<section class="kpi-grid">
+  <app-kpi-card
+    title="Citas programadas"
+    [value]="citas().length.toString()"
+    helpText="Jornada actual"
+  />
+  <app-kpi-card
+    title="Pendientes"
+    [value]="pendientes().toString()"
+    helpText="Requieren confirmacion"
+  />
+</section>
+
+@if (cargando()) {
+  <section class="panel state-message">Cargando citas...</section>
+} @else if (error()) {
+  <section class="panel state-message error">{{ error() }}</section>
+} @else {
+  <section class="panel table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Profesional</th>
+          <th>Fecha y hora</th>
+          <th>Servicio</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cita of citas(); track cita.id) {
+          <tr>
+            <td>{{ cita.id }}</td>
+            <td>{{ cita.paciente }}</td>
+            <td>{{ cita.profesional }}</td>
+            <td>{{ cita.fechaHora | date: 'short' }}</td>
+            <td>{{ cita.servicio }}</td>
+            <td><span class="pill" [ngClass]="cita.estado">{{ cita.estado }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}

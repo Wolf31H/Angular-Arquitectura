@@ -1,0 +1,41 @@
+.shell-container {
+  min-height: 100vh;
+  background: #f4f6fb;
+}
+
+.shell-sidenav {
+  width: 310px;
+  border-right: 1px solid #d8e0eb;
+  background: #ffffff;
+  padding-bottom: 1rem;
+}
+
+.brand-toolbar {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.brand-subtitle {
+  margin: 0.75rem 1rem 1rem;
+  color: #607089;
+  font-size: 0.86rem;
+}
+
+.shell-content {
+  padding: 1.25rem;
+}
+
+:host ::ng-deep .active-link {
+  border-radius: 0.75rem;
+  background: rgb(37 99 235 / 10%);
+}
+
+@media (max-width: 1024px) {
+  .shell-sidenav {
+    width: 280px;
+  }
+
+  .shell-content {
+    padding: 0.75rem;
+  }
+}

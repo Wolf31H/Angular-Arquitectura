@@ -1,0 +1,20 @@
+<app-page-header
+  title="Panel de control"
+  subtitle="Vista general de operacion clinica, comercial y financiera"
+  badge="Tiempo real"
+/>
+
+<section class="kpi-grid">
+  @for (item of resumen; track item.title) {
+    <app-kpi-card [title]="item.title" [value]="item.value" [helpText]="item.helpText" />
+  }
+</section>
+
+<section class="panel">
+  <h3>Alertas operativas</h3>
+  <ul>
+    @for (alerta of alertas; track alerta) {
+      <li>{{ alerta }}</li>
+    }
+  </ul>
+</section>

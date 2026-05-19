@@ -1,0 +1,20 @@
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+p {
+  margin: 0.35rem 0 0;
+  color: #607089;
+  max-width: 720px;
+}
