@@ -37,7 +37,23 @@ src
 |   |   |-- state
 |   |   `-- meta-reducers
 |   |-- pages
-|   |   `-- pacientes
+|   |   |-- pacientes
+|   |   |   `-- store
+|   |   |       |-- actions
+|   |   |       |-- effects
+|   |   |       |-- reducer
+|   |   |       |-- selectors
+|   |   |       |-- state
+|   |   |       `-- facade
+|   |   |-- inventario
+|   |   |   `-- store
+|   |   |       |-- actions
+|   |   |       |-- effects
+|   |   |       |-- reducer
+|   |   |       |-- selectors
+|   |   |       |-- state
+|   |   |       `-- facade
+|   |   `-- citas
 |   |       `-- store
 |   |           |-- actions
 |   |           |-- effects
@@ -78,6 +94,16 @@ Conceptos clave implementados:
 - Selectors
 - Effects
 - Facade para desacoplar componentes de NgRx
+
+## Registro de stores en routing
+
+Algunos stores de feature se registran en routing con `provideState` y `provideEffects`.
+
+Ejemplos actuales:
+
+- `features/pacientes/pacientes.routes.ts`
+- `features/inventario/inventario.routes.ts`
+- `features/citas/citas.routes.ts`
 
 ## Consumo de endpoints con NgRx
 

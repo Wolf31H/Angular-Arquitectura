@@ -17,29 +17,35 @@
   />
 </section>
 
-<section class="panel table-wrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Paciente</th>
-        <th>Profesional</th>
-        <th>Fecha y hora</th>
-        <th>Servicio</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (cita of citas(); track cita.id) {
+@if (cargando()) {
+  <section class="panel state-message">Cargando citas...</section>
+} @else if (error()) {
+  <section class="panel state-message error">{{ error() }}</section>
+} @else {
+  <section class="panel table-wrapper">
+    <table>
+      <thead>
         <tr>
-          <td>{{ cita.id }}</td>
-          <td>{{ cita.paciente }}</td>
-          <td>{{ cita.profesional }}</td>
-          <td>{{ cita.fechaHora | date: 'short' }}</td>
-          <td>{{ cita.servicio }}</td>
-          <td><span class="pill" [ngClass]="cita.estado">{{ cita.estado }}</span></td>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Profesional</th>
+          <th>Fecha y hora</th>
+          <th>Servicio</th>
+          <th>Estado</th>
         </tr>
-      }
-    </tbody>
-  </table>
-</section>
+      </thead>
+      <tbody>
+        @for (cita of citas(); track cita.id) {
+          <tr>
+            <td>{{ cita.id }}</td>
+            <td>{{ cita.paciente }}</td>
+            <td>{{ cita.profesional }}</td>
+            <td>{{ cita.fechaHora | date: 'short' }}</td>
+            <td>{{ cita.servicio }}</td>
+            <td><span class="pill" [ngClass]="cita.estado">{{ cita.estado }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}
