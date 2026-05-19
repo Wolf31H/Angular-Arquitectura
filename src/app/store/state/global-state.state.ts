@@ -1,3 +1,5 @@
+import { IIncidentModelRes } from '../../core/models/global/incident.model';
+
 export interface IGlobalState {
   loading: boolean;
   completed: boolean;
@@ -5,4 +7,10 @@ export interface IGlobalState {
   errorMessage: string;
 }
 
-export interface AppState {}
+export interface IIncidentState extends IGlobalState {
+  data: IIncidentModelRes | null;
+}
+
+export interface AppState {
+  incident: IIncidentState;
+}

@@ -10,6 +10,7 @@ import { routes } from './app.routes';
 import { authTokenInterceptor } from './core/interceptors/auth-token.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { AppEffects } from './store/effects/app.effects';
+import { IncidentEffects } from './store/effects/incident.effects';
 import { metaReducers } from './store/meta-reducers';
 import { rootReducers } from './store/reducer';
 
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideStore(rootReducers, { metaReducers }),
-    provideEffects([AppEffects]),
+    provideEffects([AppEffects, IncidentEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

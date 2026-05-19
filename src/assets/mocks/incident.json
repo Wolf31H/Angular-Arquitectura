@@ -1,0 +1,25 @@
+{
+  "data": {
+    "content": [
+      {
+        "id": 1001,
+        "type": {
+          "name": "Podologia clinica"
+        },
+        "maximo": 25,
+        "ot_maximo": 12,
+        "created_at": "2026-05-19T13:10:00Z"
+      },
+      {
+        "id": 1002,
+        "type": {
+          "name": "Control diabetico"
+        },
+        "maximo": 15,
+        "ot_maximo": 9,
+        "created_at": "2026-05-19T14:30:00Z"
+      }
+    ]
+  },
+  "error": false
+}

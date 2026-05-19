@@ -32,6 +32,9 @@ export const APP_REGEX = {
 export const APP_MESSAGES = {
   genericHttpError: 'No fue posible completar la solicitud. Intenta nuevamente.',
   pacientesLoadError: 'No fue posible cargar los pacientes.',
+  incidentServiceError: 'Ha ocurrido un error de servicio 1',
+  incidentEmptyDataError: 'Ha ocurrido un error de servicio 2',
+  incidentServerError: 'Ha ocurrido un error de servidor',
 } as const;
 
 export const APP_ENDPOINTS_CONFIG = {
@@ -40,6 +43,7 @@ export const APP_ENDPOINTS_CONFIG = {
 } as const;
 
 export type DataResource =
+  | 'incident'
   | 'pacientes'
   | 'historias-clinicas'
   | 'inventario'
@@ -49,6 +53,7 @@ export type DataResource =
   | 'citas';
 
 const API_PATHS: Record<DataResource, string> = {
+  incident: '/incident',
   pacientes: '/pacientes',
   'historias-clinicas': '/historias-clinicas',
   inventario: '/inventario',
