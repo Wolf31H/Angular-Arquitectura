@@ -1,12 +1,27 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-import { Paciente } from '../../../../core/models/paciente.model';
+import { IPacientesModelReq, IPacientesModelRes } from '../state/pacientes.state';
 
-export const PacientesActions = createActionGroup({
-  source: 'Pacientes',
-  events: {
-    'Load Pacientes': emptyProps(),
-    'Load Pacientes Success': props<{ items: Paciente[]; loadedAt: string }>(),
-    'Load Pacientes Failure': props<{ error: string }>(),
-  },
-});
+const enum TypeActionsPacientes {
+  LOAD = '[Pacientes / API] Pacientes Load',
+  FAIL = '[Pacientes / API] Pacientes Fail',
+  SUCCESS = '[Pacientes / API] Pacientes Success',
+  RESET = '[Pacientes / API] Pacientes Reset',
+}
+
+export const PacientesActionLoad = createAction(
+  TypeActionsPacientes.LOAD,
+  props<{ req: IPacientesModelReq }>(),
+);
+
+export const PacientesActionSuccess = createAction(
+  TypeActionsPacientes.SUCCESS,
+  props<{ res: IPacientesModelRes }>(),
+);
+
+export const PacientesActionFail = createAction(
+  TypeActionsPacientes.FAIL,
+  props<{ errorMessage: string }>(),
+);
+
+export const PacientesActionReset = createAction(TypeActionsPacientes.RESET);

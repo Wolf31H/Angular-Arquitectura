@@ -1,23 +1,28 @@
-import { createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { selectInventarioState } from '../reducer/inventario.reducer';
+import { INVENTARIO_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
+import { IInventarioState } from '../state/inventario.state';
+
+export const selectInventarioState = createFeatureSelector<IInventarioState>(
+  INVENTARIO_FEATURE_KEY,
+);
+
+export const selectInventarioData = createSelector(
+  selectInventarioState,
+  (state) => state?.data,
+);
 
 export const selectInventarioItems = createSelector(
-  selectInventarioState,
-  (state) => state.items,
+  selectInventarioData,
+  (data) => data?.data || [],
 );
 
 export const selectInventarioLoading = createSelector(
   selectInventarioState,
-  (state) => state.loading,
+  (state) => state?.loading,
 );
 
-export const selectInventarioError = createSelector(
+export const selectInventarioErrorMessage = createSelector(
   selectInventarioState,
-  (state) => state.error,
-);
-
-export const selectInventarioLoadedAt = createSelector(
-  selectInventarioState,
-  (state) => state.loadedAt,
+  (state) => state?.errorMessage,
 );

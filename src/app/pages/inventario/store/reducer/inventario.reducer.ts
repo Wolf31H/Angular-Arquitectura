@@ -1,38 +1,38 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import { InventarioActions } from '../actions/inventario.actions';
-import { initialInventarioState } from '../state/inventario.state';
+import { INVENTARIO_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
+import {
+  InventarioActionFail,
+  InventarioActionLoad,
+  InventarioActionReset,
+  InventarioActionSuccess,
+} from '../actions/inventario.actions';
+import { IInventarioState, initInventarioReducer } from '../state/inventario.state';
 
-export const inventarioFeature = createFeature({
-  name: 'inventario',
-  reducer: createReducer(
-    initialInventarioState,
-    on(InventarioActions.loadInventario, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    })),
-    on(InventarioActions.loadInventarioSuccess, (state, { items, loadedAt }) => ({
-      ...state,
-      items,
-      loadedAt,
-      loading: false,
-      error: null,
-    })),
-    on(InventarioActions.loadInventarioFailure, (state, { error }) => ({
-      ...state,
-      loading: false,
-      error,
-    })),
-  ),
-});
+export { INVENTARIO_FEATURE_KEY };
 
-export const {
-  name: inventarioFeatureKey,
-  reducer: inventarioReducer,
-  selectInventarioState,
-  selectItems,
-  selectLoading,
-  selectError,
-  selectLoadedAt,
-} = inventarioFeature;
+export const InventarioReducer = createReducer(
+  initInventarioReducer,
+  on(InventarioActionLoad, (state): IInventarioState => ({
+    ...state,
+    loading: true,
+    completed: false,
+    error: false,
+    errorMessage: '',
+  })),
+  on(InventarioActionSuccess, (state, { res }): IInventarioState => ({
+    ...state,
+    completed: true,
+    loading: false,
+    error: false,
+    data: res,
+  })),
+  on(InventarioActionFail, (state, { errorMessage }): IInventarioState => ({
+    ...state,
+    loading: false,
+    completed: false,
+    error: true,
+    errorMessage,
+  })),
+  on(InventarioActionReset, () => initInventarioReducer),
+);

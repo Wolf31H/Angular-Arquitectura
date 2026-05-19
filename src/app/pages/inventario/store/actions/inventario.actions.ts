@@ -1,12 +1,27 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-import { InventarioItem } from '../../../../core/models/inventario-item.model';
+import { IInventarioModelReq, IInventarioModelRes } from '../state/inventario.state';
 
-export const InventarioActions = createActionGroup({
-  source: 'Inventario',
-  events: {
-    'Load Inventario': emptyProps(),
-    'Load Inventario Success': props<{ items: InventarioItem[]; loadedAt: string }>(),
-    'Load Inventario Failure': props<{ error: string }>(),
-  },
-});
+const enum TypeActionsInventario {
+  LOAD = '[Inventario / API] Inventario Load',
+  FAIL = '[Inventario / API] Inventario Fail',
+  SUCCESS = '[Inventario / API] Inventario Success',
+  RESET = '[Inventario / API] Inventario Reset',
+}
+
+export const InventarioActionLoad = createAction(
+  TypeActionsInventario.LOAD,
+  props<{ req: IInventarioModelReq }>(),
+);
+
+export const InventarioActionSuccess = createAction(
+  TypeActionsInventario.SUCCESS,
+  props<{ res: IInventarioModelRes }>(),
+);
+
+export const InventarioActionFail = createAction(
+  TypeActionsInventario.FAIL,
+  props<{ errorMessage: string }>(),
+);
+
+export const InventarioActionReset = createAction(TypeActionsInventario.RESET);

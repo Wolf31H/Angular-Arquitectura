@@ -1,11 +1,23 @@
-import { createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { selectCitasState } from '../reducer/citas.reducer';
+import { CITAS_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
+import { ICitasState } from '../state/citas.state';
 
-export const selectCitasItems = createSelector(selectCitasState, (state) => state.items);
+export const selectCitasState = createFeatureSelector<ICitasState>(CITAS_FEATURE_KEY);
 
-export const selectCitasLoading = createSelector(selectCitasState, (state) => state.loading);
+export const selectCitasData = createSelector(selectCitasState, (state) => state?.data);
 
-export const selectCitasError = createSelector(selectCitasState, (state) => state.error);
+export const selectCitasItems = createSelector(
+  selectCitasData,
+  (data) => data?.data || [],
+);
 
-export const selectCitasLoadedAt = createSelector(selectCitasState, (state) => state.loadedAt);
+export const selectCitasLoading = createSelector(
+  selectCitasState,
+  (state) => state?.loading,
+);
+
+export const selectCitasErrorMessage = createSelector(
+  selectCitasState,
+  (state) => state?.errorMessage,
+);

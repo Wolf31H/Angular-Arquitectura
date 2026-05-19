@@ -1,34 +1,47 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { Observable, catchError, map, of, switchMap, take } from 'rxjs';
 
 import { APP_MESSAGES } from '../../../../core/constants/constants';
 import { InventarioService } from '../../../../features/inventario/services/inventario.service';
-import { InventarioActions } from '../actions/inventario.actions';
+import {
+  InventarioActionFail,
+  InventarioActionLoad,
+  InventarioActionSuccess,
+} from '../actions/inventario.actions';
+import { IInventarioModelRes } from '../state/inventario.state';
 
 @Injectable()
 export class InventarioEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly inventarioService = inject(InventarioService);
+  private readonly _actions$ = inject(Actions);
+  private readonly _service = inject(InventarioService);
 
-  readonly loadInventario$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(InventarioActions.loadInventario),
-      switchMap(() =>
-        this.inventarioService.list().pipe(
-          map((items) =>
-            InventarioActions.loadInventarioSuccess({
-              items,
-              loadedAt: new Date().toISOString(),
-            }),
-          ),
-          catchError((error: unknown) =>
+  readonly inventarioEffects$: Observable<Action> = createEffect(() =>
+    this._actions$.pipe(
+      ofType(InventarioActionLoad),
+      switchMap(({ req }) =>
+        this._service.getInventarioService(req).pipe(
+          take(1),
+          map((res: IInventarioModelRes) => {
+            if (res.error) {
+              return InventarioActionFail({
+                errorMessage: APP_MESSAGES.genericHttpError,
+              });
+            }
+
+            if (res.data) {
+              return InventarioActionSuccess({ res });
+            }
+
+            return InventarioActionFail({
+              errorMessage: APP_MESSAGES.genericHttpError,
+            });
+          }),
+          catchError(() =>
             of(
-              InventarioActions.loadInventarioFailure({
-                error:
-                  error instanceof Error
-                    ? error.message
-                    : APP_MESSAGES.genericHttpError,
+              InventarioActionFail({
+                errorMessage: APP_MESSAGES.genericHttpError,
               }),
             ),
           ),

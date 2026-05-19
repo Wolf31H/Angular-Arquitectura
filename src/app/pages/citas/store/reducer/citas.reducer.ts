@@ -1,38 +1,38 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import { CitasActions } from '../actions/citas.actions';
-import { initialCitasState } from '../state/citas.state';
+import { CITAS_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
+import {
+  CitasActionFail,
+  CitasActionLoad,
+  CitasActionReset,
+  CitasActionSuccess,
+} from '../actions/citas.actions';
+import { ICitasState, initCitasReducer } from '../state/citas.state';
 
-export const citasFeature = createFeature({
-  name: 'citas',
-  reducer: createReducer(
-    initialCitasState,
-    on(CitasActions.loadCitas, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    })),
-    on(CitasActions.loadCitasSuccess, (state, { items, loadedAt }) => ({
-      ...state,
-      items,
-      loadedAt,
-      loading: false,
-      error: null,
-    })),
-    on(CitasActions.loadCitasFailure, (state, { error }) => ({
-      ...state,
-      loading: false,
-      error,
-    })),
-  ),
-});
+export { CITAS_FEATURE_KEY };
 
-export const {
-  name: citasFeatureKey,
-  reducer: citasReducer,
-  selectCitasState,
-  selectItems,
-  selectLoading,
-  selectError,
-  selectLoadedAt,
-} = citasFeature;
+export const CitasReducer = createReducer(
+  initCitasReducer,
+  on(CitasActionLoad, (state): ICitasState => ({
+    ...state,
+    loading: true,
+    completed: false,
+    error: false,
+    errorMessage: '',
+  })),
+  on(CitasActionSuccess, (state, { res }): ICitasState => ({
+    ...state,
+    completed: true,
+    loading: false,
+    error: false,
+    data: res,
+  })),
+  on(CitasActionFail, (state, { errorMessage }): ICitasState => ({
+    ...state,
+    loading: false,
+    completed: false,
+    error: true,
+    errorMessage,
+  })),
+  on(CitasActionReset, () => initCitasReducer),
+);

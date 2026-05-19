@@ -1,38 +1,38 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import { PacientesActions } from '../actions/pacientes.actions';
-import { initialPacientesState } from '../state/pacientes.state';
+import { PACIENTES_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
+import {
+  PacientesActionFail,
+  PacientesActionLoad,
+  PacientesActionReset,
+  PacientesActionSuccess,
+} from '../actions/pacientes.actions';
+import { IPacientesState, initPacientesReducer } from '../state/pacientes.state';
 
-export const pacientesFeature = createFeature({
-  name: 'pacientes',
-  reducer: createReducer(
-    initialPacientesState,
-    on(PacientesActions.loadPacientes, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    })),
-    on(PacientesActions.loadPacientesSuccess, (state, { items, loadedAt }) => ({
-      ...state,
-      items,
-      loadedAt,
-      loading: false,
-      error: null,
-    })),
-    on(PacientesActions.loadPacientesFailure, (state, { error }) => ({
-      ...state,
-      loading: false,
-      error,
-    })),
-  ),
-});
+export { PACIENTES_FEATURE_KEY };
 
-export const {
-  name: pacientesFeatureKey,
-  reducer: pacientesReducer,
-  selectPacientesState,
-  selectItems,
-  selectLoading,
-  selectError,
-  selectLoadedAt,
-} = pacientesFeature;
+export const PacientesReducer = createReducer(
+  initPacientesReducer,
+  on(PacientesActionLoad, (state): IPacientesState => ({
+    ...state,
+    loading: true,
+    completed: false,
+    error: false,
+    errorMessage: '',
+  })),
+  on(PacientesActionSuccess, (state, { res }): IPacientesState => ({
+    ...state,
+    completed: true,
+    loading: false,
+    error: false,
+    data: res,
+  })),
+  on(PacientesActionFail, (state, { errorMessage }): IPacientesState => ({
+    ...state,
+    loading: false,
+    completed: false,
+    error: true,
+    errorMessage,
+  })),
+  on(PacientesActionReset, () => initPacientesReducer),
+);

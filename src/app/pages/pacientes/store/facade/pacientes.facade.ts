@@ -2,26 +2,32 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { PACIENTES_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
 import { Paciente } from '../../../../core/models/paciente.model';
-import { PacientesActions } from '../actions/pacientes.actions';
 import {
-  selectPacientesError,
+  PacientesActionLoad,
+  PacientesActionReset,
+} from '../actions/pacientes.actions';
+import {
+  selectPacientesErrorMessage,
   selectPacientesItems,
-  selectPacientesLoadedAt,
   selectPacientesLoading,
 } from '../selectors/pacientes.selectors';
-import { PacientesState } from '../state/pacientes.state';
+import { IPacientesModelReq, IPacientesState } from '../state/pacientes.state';
 
 @Injectable()
 export class PacientesFacade {
-  private readonly store = inject(Store<{ pacientes: PacientesState }>);
+  private readonly store = inject(Store<{ [PACIENTES_FEATURE_KEY]: IPacientesState }>);
 
   readonly pacientes$: Observable<Paciente[]> = this.store.select(selectPacientesItems);
   readonly loading$: Observable<boolean> = this.store.select(selectPacientesLoading);
-  readonly error$: Observable<string | null> = this.store.select(selectPacientesError);
-  readonly loadedAt$: Observable<string | null> = this.store.select(selectPacientesLoadedAt);
+  readonly error$: Observable<string> = this.store.select(selectPacientesErrorMessage);
 
-  loadPacientes(): void {
-    this.store.dispatch(PacientesActions.loadPacientes());
+  loadPacientes(req: IPacientesModelReq = {}): void {
+    this.store.dispatch(PacientesActionLoad({ req }));
+  }
+
+  resetPacientes(): void {
+    this.store.dispatch(PacientesActionReset());
   }
 }

@@ -1,34 +1,47 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { Observable, catchError, map, of, switchMap, take } from 'rxjs';
 
 import { APP_MESSAGES } from '../../../../core/constants/constants';
 import { CitasService } from '../../../../features/citas/services/citas.service';
-import { CitasActions } from '../actions/citas.actions';
+import {
+  CitasActionFail,
+  CitasActionLoad,
+  CitasActionSuccess,
+} from '../actions/citas.actions';
+import { ICitasModelRes } from '../state/citas.state';
 
 @Injectable()
 export class CitasEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly citasService = inject(CitasService);
+  private readonly _actions$ = inject(Actions);
+  private readonly _service = inject(CitasService);
 
-  readonly loadCitas$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CitasActions.loadCitas),
-      switchMap(() =>
-        this.citasService.list().pipe(
-          map((items) =>
-            CitasActions.loadCitasSuccess({
-              items,
-              loadedAt: new Date().toISOString(),
-            }),
-          ),
-          catchError((error: unknown) =>
+  readonly citasEffects$: Observable<Action> = createEffect(() =>
+    this._actions$.pipe(
+      ofType(CitasActionLoad),
+      switchMap(({ req }) =>
+        this._service.getCitasService(req).pipe(
+          take(1),
+          map((res: ICitasModelRes) => {
+            if (res.error) {
+              return CitasActionFail({
+                errorMessage: APP_MESSAGES.genericHttpError,
+              });
+            }
+
+            if (res.data) {
+              return CitasActionSuccess({ res });
+            }
+
+            return CitasActionFail({
+              errorMessage: APP_MESSAGES.genericHttpError,
+            });
+          }),
+          catchError(() =>
             of(
-              CitasActions.loadCitasFailure({
-                error:
-                  error instanceof Error
-                    ? error.message
-                    : APP_MESSAGES.genericHttpError,
+              CitasActionFail({
+                errorMessage: APP_MESSAGES.genericHttpError,
               }),
             ),
           ),

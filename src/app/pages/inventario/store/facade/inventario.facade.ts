@@ -2,26 +2,32 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { INVENTARIO_FEATURE_KEY } from '../../../../core/constants/selectors.constants';
 import { InventarioItem } from '../../../../core/models/inventario-item.model';
-import { InventarioActions } from '../actions/inventario.actions';
 import {
-  selectInventarioError,
+  InventarioActionLoad,
+  InventarioActionReset,
+} from '../actions/inventario.actions';
+import {
+  selectInventarioErrorMessage,
   selectInventarioItems,
-  selectInventarioLoadedAt,
   selectInventarioLoading,
 } from '../selectors/inventario.selectors';
-import { InventarioState } from '../state/inventario.state';
+import { IInventarioModelReq, IInventarioState } from '../state/inventario.state';
 
 @Injectable()
 export class InventarioFacade {
-  private readonly store = inject(Store<{ inventario: InventarioState }>);
+  private readonly store = inject(Store<{ [INVENTARIO_FEATURE_KEY]: IInventarioState }>);
 
   readonly items$: Observable<InventarioItem[]> = this.store.select(selectInventarioItems);
   readonly loading$: Observable<boolean> = this.store.select(selectInventarioLoading);
-  readonly error$: Observable<string | null> = this.store.select(selectInventarioError);
-  readonly loadedAt$: Observable<string | null> = this.store.select(selectInventarioLoadedAt);
+  readonly error$: Observable<string> = this.store.select(selectInventarioErrorMessage);
 
-  loadInventario(): void {
-    this.store.dispatch(InventarioActions.loadInventario());
+  loadInventario(req: IInventarioModelReq = {}): void {
+    this.store.dispatch(InventarioActionLoad({ req }));
+  }
+
+  resetInventario(): void {
+    this.store.dispatch(InventarioActionReset());
   }
 }

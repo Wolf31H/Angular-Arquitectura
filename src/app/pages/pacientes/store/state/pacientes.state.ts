@@ -1,15 +1,25 @@
 import { Paciente } from '../../../../core/models/paciente.model';
+import { IGlobalState } from '../../../../store/state/global-state.state';
 
-export interface PacientesState {
-  items: Paciente[];
-  loading: boolean;
-  error: string | null;
-  loadedAt: string | null;
+export interface IPacientesModelReq {
+  search?: string;
+  estado?: Paciente['estado'] | '';
 }
 
-export const initialPacientesState: PacientesState = {
-  items: [],
+export interface IPacientesModelRes {
+  data: Paciente[] | null;
+  error: boolean;
+  message?: string;
+}
+
+export interface IPacientesState extends IGlobalState {
+  data: IPacientesModelRes | null;
+}
+
+export const initPacientesReducer: IPacientesState = {
+  data: null,
   loading: false,
-  error: null,
-  loadedAt: null,
+  completed: false,
+  error: false,
+  errorMessage: '',
 };

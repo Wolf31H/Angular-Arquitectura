@@ -1,15 +1,25 @@
 import { Cita } from '../../../../core/models/cita.model';
+import { IGlobalState } from '../../../../store/state/global-state.state';
 
-export interface CitasState {
-  items: Cita[];
-  loading: boolean;
-  error: string | null;
-  loadedAt: string | null;
+export interface ICitasModelReq {
+  fecha?: string;
+  estado?: Cita['estado'] | '';
 }
 
-export const initialCitasState: CitasState = {
-  items: [],
+export interface ICitasModelRes {
+  data: Cita[] | null;
+  error: boolean;
+  message?: string;
+}
+
+export interface ICitasState extends IGlobalState {
+  data: ICitasModelRes | null;
+}
+
+export const initCitasReducer: ICitasState = {
+  data: null,
   loading: false,
-  error: null,
-  loadedAt: null,
+  completed: false,
+  error: false,
+  errorMessage: '',
 };
