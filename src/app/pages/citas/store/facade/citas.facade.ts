@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Cita } from '../../../../features/citas/models/cita.model';
+import { Cita } from '../../../../core/models/cita.model';
 import { CitasActions } from '../actions/citas.actions';
 import {
   selectCitasError,

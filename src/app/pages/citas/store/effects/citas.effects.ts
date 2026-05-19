@@ -3,19 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 
 import { APP_MESSAGES } from '../../../../core/constants/constants';
-import { CitasRepository } from '../../../../features/citas/data-access/citas.repository';
+import { CitasService } from '../../../../features/citas/services/citas.service';
 import { CitasActions } from '../actions/citas.actions';
 
 @Injectable()
 export class CitasEffects {
   private readonly actions$ = inject(Actions);
-  private readonly citasRepository = inject(CitasRepository);
+  private readonly citasService = inject(CitasService);
 
   readonly loadCitas$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CitasActions.loadCitas),
       switchMap(() =>
-        this.citasRepository.list().pipe(
+        this.citasService.list().pipe(
           map((items) =>
             CitasActions.loadCitasSuccess({
               items,

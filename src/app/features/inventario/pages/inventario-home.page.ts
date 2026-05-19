@@ -2,10 +2,10 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+import { InventarioItem } from '../../../core/models/inventario-item.model';
 import { InventarioFacade } from '../../../pages/inventario/store/facade/inventario.facade';
 import { KpiCardComponent } from '../../../shared/ui/kpi-card/kpi-card.component';
 import { PageHeaderComponent } from '../../../shared/ui/page-header/page-header.component';
-import { InventarioItem } from '../models/inventario-item.model';
 
 @Component({
   imports: [CurrencyPipe, NgClass, KpiCardComponent, PageHeaderComponent],

@@ -1,8 +1,10 @@
-<header class="header">
+<header class="page-header">
   <div>
     <h2>{{ title }}</h2>
     <p *ngIf="subtitle">{{ subtitle }}</p>
   </div>
 
-  <span *ngIf="badge" class="badge">{{ badge }}</span>
+  <mat-chip-set *ngIf="badge">
+    <mat-chip color="primary" selected>{{ badge }}</mat-chip>
+  </mat-chip-set>
 </header>

@@ -1,3 +1,7 @@
+export const APP_RUNTIME_FLAGS = {
+  useMocks: true,
+} as const;
+
 export const APP_STORAGE_KEYS = {
   authToken: 'clinic_auth_token',
   language: 'clinic_language',
@@ -30,6 +34,34 @@ export const APP_MESSAGES = {
   pacientesLoadError: 'No fue posible cargar los pacientes.',
 } as const;
 
-export const API_ENDPOINTS = {
-  pacientes: '/api/pacientes',
+export const APP_ENDPOINTS_CONFIG = {
+  apiBaseUrl: '/api',
+  mockBaseUrl: '/assets/mocks',
 } as const;
+
+export type DataResource =
+  | 'pacientes'
+  | 'historias-clinicas'
+  | 'inventario'
+  | 'facturacion-electronica'
+  | 'insumos'
+  | 'promociones'
+  | 'citas';
+
+const API_PATHS: Record<DataResource, string> = {
+  pacientes: '/pacientes',
+  'historias-clinicas': '/historias-clinicas',
+  inventario: '/inventario',
+  'facturacion-electronica': '/facturacion-electronica',
+  insumos: '/insumos',
+  promociones: '/promociones',
+  citas: '/citas',
+};
+
+export function resolveDataEndpoint(resource: DataResource): string {
+  if (APP_RUNTIME_FLAGS.useMocks) {
+    return `${APP_ENDPOINTS_CONFIG.mockBaseUrl}/${resource}.json`;
+  }
+
+  return `${APP_ENDPOINTS_CONFIG.apiBaseUrl}${API_PATHS[resource]}`;
+}

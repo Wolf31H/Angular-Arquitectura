@@ -1,4 +1,4 @@
-import { Cita } from '../../../../features/citas/models/cita.model';
+import { Cita } from '../../../../core/models/cita.model';
 
 export interface CitasState {
   items: Cita[];

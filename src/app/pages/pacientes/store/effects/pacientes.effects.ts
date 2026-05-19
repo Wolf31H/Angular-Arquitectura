@@ -3,19 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 
 import { APP_MESSAGES } from '../../../../core/constants/constants';
-import { PacientesRepository } from '../../../../features/pacientes/data-access/pacientes.repository';
+import { PacientesService } from '../../../../features/pacientes/services/pacientes.service';
 import { PacientesActions } from '../actions/pacientes.actions';
 
 @Injectable()
 export class PacientesEffects {
   private readonly actions$ = inject(Actions);
-  private readonly pacientesRepository = inject(PacientesRepository);
+  private readonly pacientesService = inject(PacientesService);
 
   readonly loadPacientes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PacientesActions.loadPacientes),
       switchMap(() =>
-        this.pacientesRepository.list().pipe(
+        this.pacientesService.list().pipe(
           map((items) =>
             PacientesActions.loadPacientesSuccess({
               items,

@@ -3,19 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 
 import { APP_MESSAGES } from '../../../../core/constants/constants';
-import { InventarioRepository } from '../../../../features/inventario/data-access/inventario.repository';
+import { InventarioService } from '../../../../features/inventario/services/inventario.service';
 import { InventarioActions } from '../actions/inventario.actions';
 
 @Injectable()
 export class InventarioEffects {
   private readonly actions$ = inject(Actions);
-  private readonly inventarioRepository = inject(InventarioRepository);
+  private readonly inventarioService = inject(InventarioService);
 
   readonly loadInventario$ = createEffect(() =>
     this.actions$.pipe(
       ofType(InventarioActions.loadInventario),
       switchMap(() =>
-        this.inventarioRepository.list().pipe(
+        this.inventarioService.list().pipe(
           map((items) =>
             InventarioActions.loadInventarioSuccess({
               items,

@@ -1,135 +1,53 @@
 # Clinica Estetica Podologica - Frontend Angular
 
-Proyecto base en **Angular 21 (ultima version estable)** con arquitectura escalable para un sistema integral de centro de estetica y salud podologica.
+Proyecto base en **Angular 21** con arquitectura escalable para un sistema integral de centro de estetica y salud podologica.
 
-## Alcance funcional inicial
+## Cambios principales
 
-Esta base cubre la estructura para evolucionar los siguientes dominios:
+- Mocks centralizados en `src/assets/mocks`.
+- Consumo de datos desde servicios (`features/*/services`).
+- Variable global para cambiar entre mocks y backend real.
+- Modelos centralizados en `src/app/core/models`.
+- Rediseno base con Angular Material (layout, cards, headers).
+- Estilos globales reutilizables en `src/styles`.
 
-- Historias clinicas
-- Gestion de pacientes
-- Agenda de citas
-- Inventario
-- Manejo de insumos
-- Facturacion electronica
-- Promociones y campanas
-- Reportes operativos y financieros
+## Switch global mock / real
 
-## Arquitectura propuesta
+En `src/app/core/constants/constants.ts`:
 
-```text
-src
-|-- app
-|   |-- core
-|   |   |-- constants
-|   |   |   `-- constants.ts
-|   |   |-- guards
-|   |   |-- interceptors
-|   |   |-- interfaces
-|   |   |-- layout
-|   |   |-- models
-|   |   `-- services
-|   |-- store
-|   |   |-- actions
-|   |   |-- effects
-|   |   |-- reducer
-|   |   |-- selectors
-|   |   |-- state
-|   |   `-- meta-reducers
-|   |-- pages
-|   |   |-- pacientes
-|   |   |   `-- store
-|   |   |       |-- actions
-|   |   |       |-- effects
-|   |   |       |-- reducer
-|   |   |       |-- selectors
-|   |   |       |-- state
-|   |   |       `-- facade
-|   |   |-- inventario
-|   |   |   `-- store
-|   |   |       |-- actions
-|   |   |       |-- effects
-|   |   |       |-- reducer
-|   |   |       |-- selectors
-|   |   |       |-- state
-|   |   |       `-- facade
-|   |   `-- citas
-|   |       `-- store
-|   |           |-- actions
-|   |           |-- effects
-|   |           |-- reducer
-|   |           |-- selectors
-|   |           |-- state
-|   |           `-- facade
-|   |-- shared
-|   |   `-- ui
-|   `-- features
-|       |-- dashboard
-|       |-- pacientes
-|       |-- historias-clinicas
-|       |-- inventario
-|       |-- facturacion-electronica
-|       |-- insumos
-|       |-- promociones
-|       |-- citas
-|       `-- reportes
-`-- assets
-    `-- i18n
-        |-- es.json
-        `-- en.json
-```
+- `APP_RUNTIME_FLAGS.useMocks = true`: usa `assets/mocks/*.json`
+- `APP_RUNTIME_FLAGS.useMocks = false`: usa endpoints reales `/api/*`
 
-## Store NgRx
+## Arquitectura de datos
 
-El Store maneja estado global y por feature usando NgRx.
+- Servicios por dominio:
+  - `features/pacientes/services/pacientes.service.ts`
+  - `features/historias-clinicas/services/historias-clinicas.service.ts`
+  - `features/inventario/services/inventario.service.ts`
+  - `features/facturacion-electronica/services/facturacion-electronica.service.ts`
+  - `features/insumos/services/insumos.service.ts`
+  - `features/promociones/services/promociones.service.ts`
+  - `features/citas/services/citas.service.ts`
 
-- Store global: `src/app/store`
+- Store global NgRx: `src/app/store`
 - Store por feature: `src/app/pages/<feature>/store`
-
-Conceptos clave implementados:
-
-- State
-- Actions
-- Reducers
-- Selectors
-- Effects
-- Facade para desacoplar componentes de NgRx
 
 ## Registro de stores en routing
 
-Algunos stores de feature se registran en routing con `provideState` y `provideEffects`.
-
-Ejemplos actuales:
+Algunos stores de feature se registran en routing con `provideState` y `provideEffects`:
 
 - `features/pacientes/pacientes.routes.ts`
 - `features/inventario/inventario.routes.ts`
 - `features/citas/citas.routes.ts`
 
-## Consumo de endpoints con NgRx
+## Estilos globales reutilizables
 
-En el feature de pacientes se implemento un flujo completo:
+Carpeta `src/styles`:
 
-1. `PacientesActions.loadPacientes`
-2. `PacientesEffects` consume endpoint (`/api/pacientes`) via `PacientesRepository`
-3. `PacientesReducer` actualiza estado (`items`, `loading`, `error`, `loadedAt`)
-4. `PacientesFacade` expone observables al componente
-5. `PacientesHomePage` consume facade sin acoplarse a NgRx
-
-## Interceptores HTTP
-
-- `auth-token.interceptor.ts`: agrega header Authorization
-- `http-error.interceptor.ts`: maneja errores y estado global de requests
-
-## Constantes globales
-
-En `core/constants/constants.ts` se centraliza:
-
-- Llaves de storage
-- Estados/IDs comunes
-- Limites de negocio
-- Patrones de validacion
-- Mensajes generales
-- Endpoints base
+- `_tokens.scss`
+- `_layout.scss`
+- `_components.scss`
+- `_utilities.scss`
 
 ## Scripts
 
@@ -139,11 +57,3 @@ npm start
 npm run build
 npm test
 ```
-
-## Recomendaciones de evolucion
-
-- Integrar autenticacion real con JWT/OAuth2 y control de permisos por rol.
-- Conectar facturacion electronica con proveedor autorizado (cumplimiento tributario local).
-- Incorporar trazabilidad clinica (auditoria, versionado de historia, firma digital).
-- Integrar libreria de i18n (por ejemplo Transloco o ngx-translate) consumiendo `assets/i18n`.
-- Anadir pruebas E2E (Playwright/Cypress) para procesos criticos: agenda, historia, factura y caja.

@@ -2,10 +2,10 @@ import { DatePipe, NgClass } from '@angular/common';
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+import { Cita } from '../../../core/models/cita.model';
 import { CitasFacade } from '../../../pages/citas/store/facade/citas.facade';
 import { KpiCardComponent } from '../../../shared/ui/kpi-card/kpi-card.component';
 import { PageHeaderComponent } from '../../../shared/ui/page-header/page-header.component';
-import { Cita } from '../models/cita.model';
 
 @Component({
   imports: [DatePipe, NgClass, KpiCardComponent, PageHeaderComponent],

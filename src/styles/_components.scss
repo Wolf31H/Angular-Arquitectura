@@ -1,0 +1,40 @@
+@use './tokens' as *;
+
+.panel {
+  background: #ffffff;
+  border: 1px solid $surface-border;
+  border-radius: 0.9rem;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e7edf5;
+  text-align: left;
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+th {
+  color: #2a3b53;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.state-message {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.state-message.error {
+  color: $error-text;
+  background: $error-bg;
+}

@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-kpi-card',
+  imports: [MatCardModule],
   templateUrl: './kpi-card.component.html',
   styleUrl: './kpi-card.component.scss',
 })

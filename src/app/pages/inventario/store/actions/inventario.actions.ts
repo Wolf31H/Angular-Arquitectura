@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { InventarioItem } from '../../../../features/inventario/models/inventario-item.model';
+import { InventarioItem } from '../../../../core/models/inventario-item.model';
 
 export const InventarioActions = createActionGroup({
   source: 'Inventario',

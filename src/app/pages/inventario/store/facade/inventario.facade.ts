@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { InventarioItem } from '../../../../features/inventario/models/inventario-item.model';
+import { InventarioItem } from '../../../../core/models/inventario-item.model';
 import { InventarioActions } from '../actions/inventario.actions';
 import {
   selectInventarioError,

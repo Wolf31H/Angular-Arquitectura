@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { Paciente } from '../../../../features/pacientes/models/paciente.model';
+import { Paciente } from '../../../../core/models/paciente.model';
 
 export const PacientesActions = createActionGroup({
   source: 'Pacientes',

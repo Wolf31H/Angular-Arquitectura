@@ -1,4 +1,4 @@
-import { InventarioItem } from '../../../../features/inventario/models/inventario-item.model';
+import { InventarioItem } from '../../../../core/models/inventario-item.model';
 
 export interface InventarioState {
   items: InventarioItem[];

@@ -1,4 +1,4 @@
-import { Paciente } from '../../../../features/pacientes/models/paciente.model';
+import { Paciente } from '../../../../core/models/paciente.model';
 
 export interface PacientesState {
   items: Paciente[];

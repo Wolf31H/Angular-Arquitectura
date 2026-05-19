@@ -1,17 +1,20 @@
+@use './styles/tokens' as *;
+@use './styles/layout';
+@use './styles/components';
+@use './styles/utilities';
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  background: #f3f4f6;
-  color: #111827;
-  font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100%;
 }
 
-.panel {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-  padding: 1rem;
+body {
+  background: $app-background;
+  color: $app-text-color;
+  font-family: $app-font-family;
 }

@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { Cita } from '../../../../features/citas/models/cita.model';
+import { Cita } from '../../../../core/models/cita.model';
 
 export const CitasActions = createActionGroup({
   source: 'Citas',
