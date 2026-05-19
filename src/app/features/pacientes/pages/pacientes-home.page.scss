@@ -5,6 +5,16 @@
   margin-bottom: 1rem;
 }
 
+.state-message {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.state-message.error {
+  color: #991b1b;
+  background: #fef2f2;
+}
+
 .table-wrapper {
   overflow-x: auto;
 }

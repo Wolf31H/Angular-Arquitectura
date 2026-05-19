@@ -17,32 +17,38 @@
   />
 </section>
 
-<section class="panel table-wrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Paciente</th>
-        <th>Telefono</th>
-        <th>Ultima visita</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (paciente of pacientes(); track paciente.id) {
+@if (cargando()) {
+  <section class="panel state-message">Cargando pacientes...</section>
+} @else if (error()) {
+  <section class="panel state-message error">{{ error() }}</section>
+} @else {
+  <section class="panel table-wrapper">
+    <table>
+      <thead>
         <tr>
-          <td>{{ paciente.id }}</td>
-          <td>
-            <strong>{{ paciente.nombreCompleto }}</strong>
-            <small>{{ paciente.documento }}</small>
-          </td>
-          <td>{{ paciente.telefono }}</td>
-          <td>{{ paciente.ultimaVisita | date: 'mediumDate' }}</td>
-          <td>
-            <span class="pill" [ngClass]="paciente.estado">{{ paciente.estado }}</span>
-          </td>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Telefono</th>
+          <th>Ultima visita</th>
+          <th>Estado</th>
         </tr>
-      }
-    </tbody>
-  </table>
-</section>
+      </thead>
+      <tbody>
+        @for (paciente of pacientes(); track paciente.id) {
+          <tr>
+            <td>{{ paciente.id }}</td>
+            <td>
+              <strong>{{ paciente.nombreCompleto }}</strong>
+              <small>{{ paciente.documento }}</small>
+            </td>
+            <td>{{ paciente.telefono }}</td>
+            <td>{{ paciente.ultimaVisita | date: 'mediumDate' }}</td>
+            <td>
+              <span class="pill" [ngClass]="paciente.estado">{{ paciente.estado }}</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}
